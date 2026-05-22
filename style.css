@@ -1912,5 +1912,66 @@ svg.gradients-defs {
   stroke-width: 2.5px;
 }
 
+/* Individual Set Deletion & Footer Batch Actions */
+.set-delete-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--text-muted);
+  transition: var(--transition-smooth);
+  margin: 0 auto;
+}
 
+.set-delete-btn:hover {
+  color: var(--danger);
+  background: rgba(255, 75, 92, 0.1);
+}
 
+.set-delete-btn:active {
+  transform: scale(0.92);
+}
+
+.logger-exercise-footer-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.logger-exercise-footer-actions .btn-add-set-row {
+  margin-top: 0;
+  flex: 1;
+  width: auto;
+}
+
+.btn-check-all-sets-footer {
+  flex: 1;
+  font-size: 0.75rem;
+  padding: 6px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--text-secondary);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  transition: var(--transition-smooth);
+}
+
+.btn-check-all-sets-footer:hover {
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--primary);
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+.btn-check-all-sets-footer:active {
+  transform: scale(0.95);
+  background: rgba(255, 255, 255, 0.1);
+}

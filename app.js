@@ -1023,14 +1023,11 @@ function renderActiveExercises() {
     thead.innerHTML = `
       <tr>
         <th style="width: 10%">セット</th>
-        <th style="width: 30%">重量 (kg)</th>
+        <th style="width: 25%">重量 (kg)</th>
         <th style="width: 25%">レップ数</th>
-        <th style="width: 20%">RPE</th>
-        <th style="width: 15%">
-          <button type="button" class="btn-check-all-sets" data-ex-idx="${exIndex}" title="一括チェック/解除">
-            完了<svg class="icon" style="width:8px; height:8px; margin-left:2px; pointer-events:none;"><use href="#icon-check"></use></svg>
-          </button>
-        </th>
+        <th style="width: 16%">RPE</th>
+        <th style="width: 12%">完了</th>
+        <th style="width: 12%">削除</th>
       </tr>
     `;
     table.appendChild(thead);
@@ -1072,20 +1069,40 @@ function renderActiveExercises() {
             <svg class="icon"><use href="#icon-check"></use></svg>
           </button>
         </td>
+        <td>
+          <button class="set-delete-btn" data-ex-idx="${exIndex}" data-set-idx="${setIndex}" title="セットを削除">
+            <svg style="width:14px; height:14px;" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><use href="#icon-trash"></use></svg>
+          </button>
+        </td>
       `;
       tbody.appendChild(tr);
     });
     table.appendChild(tbody);
     
+    // Footer actions container (Add set & batch check)
+    const footerActions = document.createElement('div');
+    footerActions.className = 'logger-exercise-footer-actions';
+    
     // Add set row button
     const btnAddSet = document.createElement('button');
+    btnAddSet.type = 'button';
     btnAddSet.className = 'btn-add-set-row';
     btnAddSet.textContent = '+ セットを追加';
     btnAddSet.addEventListener('click', () => addSetToActiveExercise(exIndex));
 
+    // Batch check button
+    const btnBatchCheck = document.createElement('button');
+    btnBatchCheck.type = 'button';
+    btnBatchCheck.className = 'btn-check-all-sets-footer';
+    btnBatchCheck.innerHTML = `<svg class="icon" style="width:12px; height:12px; margin-right:4px;"><use href="#icon-check"></use></svg>一括チェック`;
+    btnBatchCheck.dataset.exIdx = exIndex;
+    
+    footerActions.appendChild(btnAddSet);
+    footerActions.appendChild(btnBatchCheck);
+
     card.appendChild(header);
     card.appendChild(table);
-    card.appendChild(btnAddSet);
+    card.appendChild(footerActions);
     
     el.activeExercisesList.appendChild(card);
   });
@@ -1159,17 +1176,38 @@ function renderActiveExercises() {
       renderActiveExercises();
     });
   });
-  // Check/Uncheck all sets click
+
+  // Check/Uncheck all sets click (shared click handler)
+  const handleCheckAll = (e) => {
+    const targetBtn = e.target.closest('.btn-check-all-sets, .btn-check-all-sets-footer');
+    const exIdx = parseInt(targetBtn.dataset.exIdx, 10);
+    const exercise = state.activeWorkout.exercises[exIdx];
+    
+    const allCompleted = exercise.sets.every(s => s.completed);
+    exercise.sets.forEach(set => {
+      set.completed = !allCompleted;
+    });
+    
+    DB.saveActiveWorkout();
+    renderActiveExercises();
+  };
+
   document.querySelectorAll('.btn-check-all-sets').forEach(btn => {
+    btn.addEventListener('click', handleCheckAll);
+  });
+
+  document.querySelectorAll('.btn-check-all-sets-footer').forEach(btn => {
+    btn.addEventListener('click', handleCheckAll);
+  });
+
+  // Delete individual sets click
+  document.querySelectorAll('.set-delete-btn').forEach(btn => {
     btn.addEventListener('click', (e) => {
-      const targetBtn = e.target.closest('.btn-check-all-sets');
+      const targetBtn = e.target.closest('.set-delete-btn');
       const exIdx = parseInt(targetBtn.dataset.exIdx, 10);
-      const exercise = state.activeWorkout.exercises[exIdx];
+      const setIdx = parseInt(targetBtn.dataset.setIdx, 10);
       
-      const allCompleted = exercise.sets.every(s => s.completed);
-      exercise.sets.forEach(set => {
-        set.completed = !allCompleted;
-      });
+      state.activeWorkout.exercises[exIdx].sets.splice(setIdx, 1);
       
       DB.saveActiveWorkout();
       renderActiveExercises();
