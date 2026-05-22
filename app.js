@@ -34,7 +34,74 @@ const DEFAULT_EXERCISES = [
   { id: '14', name: 'クランチ (Crunch)', category: '腹筋', emoji: '🧘' },
   { id: '15', name: 'プランク (Plank)', category: '腹筋', emoji: '🤸' },
   
-  { id: '16', name: 'デッドリフト (Deadlift)', category: 'その他', emoji: '🏋️' }
+  { id: '16', name: 'デッドリフト (Deadlift)', category: '背中', emoji: '🏋️' },
+
+  { id: '17', name: 'ダンベルプレス (Dumbbell Press)', category: '胸', emoji: '🏋️' },
+  { id: '18', name: 'インクライン・ベンチプレス (Incline Bench Press)', category: '胸', emoji: '🏋️' },
+  { id: '19', name: 'ケーブル・クロスオーバー (Cable Crossover)', category: '胸', emoji: '👐' },
+  { id: '20', name: 'スミスマシン・ベンチプレス (Smith Machine Bench Press)', category: '胸', emoji: '🏋️' },
+  { id: '21', name: 'スミスマシン・インクラインプレス (Smith Machine Incline Press)', category: '胸', emoji: '🏋️' },
+  { id: '22', name: 'チェストプレス (Chest Press Machine)', category: '胸', emoji: '🏋️' },
+  { id: '23', name: 'ペックデックフライ (Pec Deck Fly)', category: '胸', emoji: '👐' },
+  { id: '24', name: 'ケーブル・チェストプレス (Cable Chest Press)', category: '胸', emoji: '🏋️' },
+
+  { id: '25', name: 'シーテッド・ケーブルローイング (Seated Cable Row)', category: '背中', emoji: '🚣‍♂️' },
+  { id: '26', name: 'ワンハンド・ダンベルローイング (One-Arm Dumbbell Row)', category: '背中', emoji: '🏋️' },
+  { id: '27', name: 'スミスマシン・ベントオーバーローイング (Smith Machine Bent-Over Row)', category: '背中', emoji: '🏋️' },
+  { id: '28', name: 'アシスト・チンニング (Assisted Pull Up)', category: '背中', emoji: '🧗' },
+  { id: '29', name: 'シーテッド・ロウ (Seated Row Machine)', category: '背中', emoji: '🚣‍♂️' },
+  { id: '30', name: 'ストレートアーム・プルダウン (Straight Arm Pulldown)', category: '背中', emoji: '🚣‍♂️' },
+  { id: '31', name: 'プルオーバー (Pullover Machine)', category: '背中', emoji: '🧘' },
+
+  { id: '32', name: 'レッグエクステンション (Leg Extension)', category: '脚', emoji: '🦵' },
+  { id: '33', name: 'ルーマニアン・デッドリフト (Romanian Deadlift)', category: '脚', emoji: '🏋️' },
+  { id: '34', name: 'ブルガリアン・スクワット (Bulgarian Split Squat)', category: '脚', emoji: '🦵' },
+  { id: '35', name: 'カーフレイズ (Calf Raise)', category: '脚', emoji: '🦵' },
+  { id: '36', name: 'スミスマシン・スクワット (Smith Machine Squat)', category: '脚', emoji: '🏋️' },
+  { id: '37', name: 'ハックスクワット (Hack Squat)', category: '脚', emoji: '🏋️' },
+  { id: '38', name: 'ヒップスラスト (Hip Thrust)', category: '脚', emoji: '🏋️' },
+  { id: '39', name: 'ヒップアブダクション (Hip Abduction Machine)', category: '脚', emoji: '🦵' },
+  { id: '40', name: 'ヒップアダクション (Hip Adduction Machine)', category: '脚', emoji: '🦵' },
+
+  { id: '41', name: 'バーベル・ショルダープレス (Barbell Shoulder Press)', category: '肩', emoji: '🏋️' },
+  { id: '42', name: 'ダンベル・ショルダープレス (Dumbbell Shoulder Press)', category: '肩', emoji: '🏋️' },
+  { id: '43', name: 'フロントレイズ (Front Raise)', category: '肩', emoji: '🏋️' },
+  { id: '44', name: 'リアレイズ (Rear Delt Raise)', category: '肩', emoji: '👐' },
+  { id: '45', name: 'アップライトロウ (Upright Row)', category: '肩', emoji: '🏋️' },
+  { id: '46', name: 'スミスマシン・ショルダープレス (Smith Machine Shoulder Press)', category: '肩', emoji: '🏋️' },
+  { id: '47', name: 'ショルダープレス (Shoulder Press Machine)', category: '肩', emoji: '🏋️' },
+  { id: '48', name: 'リアデルトフライ (Rear Delt Fly Machine)', category: '肩', emoji: '👐' },
+  { id: '49', name: 'ケーブル・サイドレイズ (Cable Lateral Raise)', category: '肩', emoji: '🦅' },
+  { id: '50', name: 'ケーブル・フェイスプル (Cable Face Pull)', category: '肩', emoji: '🚣‍♂️' },
+
+  { id: '51', name: 'バーベル・カール (Barbell Curl)', category: '腕', emoji: '💪' },
+  { id: '52', name: 'インクライン・ダンベルカール (Incline Dumbbell Curl)', category: '腕', emoji: '💪' },
+  { id: '53', name: 'ケーブル・プッシュダウン (Cable Pushdown)', category: '腕', emoji: '💪' },
+  { id: '54', name: 'ディップス (Dips)', category: '腕', emoji: '💪' },
+  { id: '55', name: 'プリーチャーカール (Preacher Curl Machine)', category: '腕', emoji: '💪' },
+  { id: '56', name: 'ケーブル・ハンマーカール (Cable Hammer Curl)', category: '腕', emoji: '💪' },
+  { id: '57', name: 'スミスマシン・ナローベンチプレス (Smith Machine Close-Grip Bench Press)', category: '腕', emoji: '🏋️' },
+  { id: '58', name: 'トライセップス・エクステンション (Triceps Extension Machine)', category: '腕', emoji: '💪' },
+  { id: '59', name: 'ケーブル・オーバーヘッド・トライセプスエクステンション (Cable Overhead Triceps Extension)', category: '腕', emoji: '💪' },
+
+  { id: '60', name: 'レッグレイズ (Leg Raise)', category: '腹筋', emoji: '🧘' },
+  { id: '61', name: 'アブローラー (Ab Roller)', category: '腹筋', emoji: '🛹' },
+  { id: '62', name: 'ケーブル・クランチ (Cable Crunch)', category: '腹筋', emoji: '🧘' },
+  { id: '63', name: 'アブドミナル・クランチ (Abdominal Crunch Machine)', category: '腹筋', emoji: '🧘' },
+  { id: '64', name: 'ロータリー・トルソー (Rotary Torso Machine)', category: '腹筋', emoji: '🧘' },
+  { id: '65', name: 'ケーブル・ウッドチョッパー (Cable Woodchop)', category: '腹筋', emoji: '🧘' },
+  { id: '66', name: 'ケーブル・サイドベンド (Cable Side Bend)', category: '腹筋', emoji: '🧘' },
+  { id: '67', name: 'アブコースター (Ab Coaster Machine)', category: '腹筋', emoji: '🧘' },
+
+  { id: '68', name: 'トレッドミル (Treadmill)', category: '有酸素', emoji: '🏃‍♂️' },
+  { id: '69', name: 'フィットネスバイク (Exercise Bike)', category: '有酸素', emoji: '🚴‍♂️' },
+  { id: '70', name: 'ステアマスター (Stairmaster)', category: '有酸素', emoji: '🧗' },
+  { id: '71', name: 'ローイングマシン (Rowing Machine)', category: '有酸素', emoji: '🚣‍♂️' },
+  { id: '72', name: 'エリプティカル・クロストレーナー (Elliptical Trainer)', category: '有酸素', emoji: '🏃‍♂️' },
+  { id: '73', name: 'リカンベント・バイク (Recumbent Bike)', category: '有酸素', emoji: '🚴‍♂️' },
+  { id: '74', name: 'スピニングバイク (Spinning Bike)', category: '有酸素', emoji: '🚴‍♂️' },
+  { id: '75', name: 'アサルトバイク (Assault Bike)', category: '有酸素', emoji: '🚴‍♂️' },
+  { id: '76', name: '自走式トレッドミル (Manual Treadmill)', category: '有酸素', emoji: '🏃‍♂️' }
 ];
 
 // ----------------------------------------------------
@@ -83,7 +150,44 @@ const DB = {
     // 1. Load Exercises
     const localEx = localStorage.getItem('wt_exercises');
     if (localEx) {
-      state.exercises = JSON.parse(localEx);
+      let loadedEx = JSON.parse(localEx);
+      let modified = false;
+      
+      // Update existing default exercises if they changed (e.g. Deadlift category changed to 背中)
+      loadedEx = loadedEx.map(ex => {
+        const defaultEx = DEFAULT_EXERCISES.find(d => d.id === ex.id);
+        if (defaultEx && (ex.category !== defaultEx.category || ex.name !== defaultEx.name || ex.emoji !== defaultEx.emoji)) {
+          modified = true;
+          return { ...ex, name: defaultEx.name, category: defaultEx.category, emoji: defaultEx.emoji };
+        }
+        return ex;
+      });
+
+      // Add any new default exercises not present in the user's exercises
+      DEFAULT_EXERCISES.forEach(defEx => {
+        if (!loadedEx.some(ex => ex.id === defEx.id)) {
+          loadedEx.push(defEx);
+          modified = true;
+        }
+      });
+      
+      if (modified) {
+        // Sort: default exercises first (sorted by numeric ID 1-76), then custom exercises
+        loadedEx.sort((a, b) => {
+          const aId = parseInt(a.id, 10);
+          const bId = parseInt(b.id, 10);
+          const aIsDefault = !isNaN(aId) && aId <= 76;
+          const bIsDefault = !isNaN(bId) && bId <= 76;
+          if (aIsDefault && bIsDefault) return aId - bId;
+          if (aIsDefault) return -1;
+          if (bIsDefault) return 1;
+          return parseFloat(a.id) - parseFloat(b.id);
+        });
+        state.exercises = loadedEx;
+        localStorage.setItem('wt_exercises', JSON.stringify(state.exercises));
+      } else {
+        state.exercises = loadedEx;
+      }
     } else {
       state.exercises = [...DEFAULT_EXERCISES];
       localStorage.setItem('wt_exercises', JSON.stringify(state.exercises));
@@ -1635,8 +1739,8 @@ function renderMasterExerciseList() {
     card.className = 'glass-card exercise-master-item';
     
     // Check if it is a custom exercise that can be deleted
-    // Non-custom defaults have simple numeric IDs '1' through '16'
-    const isCustom = isNaN(ex.id) || parseInt(ex.id, 10) > 16;
+    // Non-custom defaults have simple numeric IDs '1' through '76'
+    const isCustom = isNaN(ex.id) || parseInt(ex.id, 10) > 76;
     let deleteHTML = '';
     
     if (isCustom) {
@@ -1700,6 +1804,7 @@ el.formCreateExercise.addEventListener('submit', (e) => {
     '肩': '🏋️‍♂️',
     '腕': '💪',
     '腹筋': '🧘',
+    '有酸素': '🏃‍♂️',
     'その他': '🏋️'
   };
 
