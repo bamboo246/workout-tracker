@@ -150,7 +150,17 @@ const DB = {
     // 1. Load Exercises
     const localEx = localStorage.getItem('wt_exercises');
     if (localEx) {
-      let loadedEx = JSON.parse(localEx);
+      let loadedEx = [];
+      try {
+        loadedEx = JSON.parse(localEx);
+        if (!Array.isArray(loadedEx)) loadedEx = [];
+      } catch (err) {
+        loadedEx = [];
+      }
+      
+      // Filter out null/undefined/invalid elements
+      loadedEx = loadedEx.filter(ex => ex && typeof ex === 'object' && ex.id);
+      
       let modified = false;
       
       // Update existing default exercises if they changed (e.g. Deadlift category changed to 背中)
@@ -196,7 +206,12 @@ const DB = {
     // 2. Load History
     const localHist = localStorage.getItem('wt_history');
     if (localHist) {
-      state.workoutHistory = JSON.parse(localHist);
+      try {
+        const parsed = JSON.parse(localHist);
+        state.workoutHistory = Array.isArray(parsed) ? parsed.filter(w => w && w.id) : [];
+      } catch (err) {
+        state.workoutHistory = [];
+      }
     } else {
       // Mock history for 3 days of workouts
       const threeDaysAgo = new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString();
@@ -273,7 +288,11 @@ const DB = {
     // 3. Load Active Workout Session (recovery support)
     const localActive = localStorage.getItem('wt_active_workout');
     if (localActive) {
-      state.activeWorkout = JSON.parse(localActive);
+      try {
+        state.activeWorkout = JSON.parse(localActive);
+      } catch (err) {
+        state.activeWorkout = null;
+      }
     }
 
     // 4. Load Streak
@@ -282,7 +301,12 @@ const DB = {
     // 5. Load Meals
     const localMeals = localStorage.getItem('wt_meals');
     if (localMeals) {
-      state.meals = JSON.parse(localMeals);
+      try {
+        const parsed = JSON.parse(localMeals);
+        state.meals = Array.isArray(parsed) ? parsed.filter(m => m && m.id) : [];
+      } catch (err) {
+        state.meals = [];
+      }
     } else {
       const now = new Date();
       
@@ -303,7 +327,12 @@ const DB = {
     // 6. Load Body Metrics
     const localMetrics = localStorage.getItem('wt_body_metrics');
     if (localMetrics) {
-      state.bodyMetrics = JSON.parse(localMetrics);
+      try {
+        const parsed = JSON.parse(localMetrics);
+        state.bodyMetrics = Array.isArray(parsed) ? parsed.filter(bm => bm && bm.id) : [];
+      } catch (err) {
+        state.bodyMetrics = [];
+      }
     } else {
       const msInDay = 24 * 60 * 60 * 1000;
       const t = Date.now();
@@ -322,7 +351,12 @@ const DB = {
     // 7. Load Custom Routines
     const localRoutines = localStorage.getItem('wt_routines');
     if (localRoutines) {
-      state.routines = JSON.parse(localRoutines);
+      try {
+        const parsed = JSON.parse(localRoutines);
+        state.routines = Array.isArray(parsed) ? parsed.filter(r => r && r.id) : [];
+      } catch (err) {
+        state.routines = [];
+      }
     } else {
       state.routines = [];
     }
