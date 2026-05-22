@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>筋トレログ | Workout Tracker</title>
+  
+  <!-- PWA Meta Tags -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="筋トレログ">
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="icon-192.png">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Inline SVG Symbols for Icons -->
+  <svg style="display: none;">
+    <symbol id="icon-home" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+      <polyline points="9 22 9 12 15 12 15 22"/>
+    </symbol>
+    <symbol id="icon-dumbbell" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M6.5 6.5 4 9M18 4l2.5 2.5M3 21l18-18M20.5 20.5 18 18M3.5 3.5 6 6M14 6l1.5 1.5M9 11l1.5 1.5M19 19l-2.5-2.5M16.5 16.5 14 14M8 10l-2.5-2.5M11.5 11.5 9 9M12 12l2.5 2.5"/>
+    </symbol>
+    <symbol id="icon-calendar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <rect width="18" height="18" x="3" y="4" rx="2" ry="2"/>
+      <line x1="16" x2="16" y1="2" y2="6"/>
+      <line x1="8" x2="8" y1="2" y2="6"/>
+      <line x1="3" x2="21" y1="10" y2="10"/>
+    </symbol>
+    <symbol id="icon-list" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="8" x2="21" y1="6" y2="6"/>
+      <line x1="8" x2="21" y1="12" y2="12"/>
+      <line x1="8" x2="21" y1="18" y2="18"/>
+      <line x1="3" x2="3.01" y1="6" y2="6"/>
+      <line x1="3" x2="3.01" y1="12" y2="12"/>
+      <line x1="3" x2="3.01" y1="18" y2="18"/>
+    </symbol>
+    <symbol id="icon-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M5 12h14M12 5v14"/>
+    </symbol>
+    <symbol id="icon-trash" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M3 6h18M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/>
+      <line x1="10" x2="10" y1="11" y2="17"/>
+      <line x1="14" x2="14" y1="11" y2="17"/>
+    </symbol>
+    <symbol id="icon-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="20 6 9 17 4 12"/>
+    </symbol>
+    <symbol id="icon-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="10"/>
+      <polyline points="12 6 12 12 16 14"/>
+    </symbol>
+    <symbol id="icon-play" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polygon points="6 3 20 12 6 21 6 3"/>
+    </symbol>
+    <symbol id="icon-pause" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <rect width="4" height="16" x="6" y="4" rx="1"/>
+      <rect width="4" height="16" x="14" y="4" rx="1"/>
+    </symbol>
+    <symbol id="icon-chevron-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="9 18 15 12 9 6"/>
+    </symbol>
+    <symbol id="icon-chevron-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="15 18 9 12 15 6"/>
+    </symbol>
+    <symbol id="icon-fire" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/>
+    </symbol>
+    <symbol id="icon-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <rect width="14" height="14" x="8" y="8" rx="2" ry="2"/>
+      <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/>
+    </symbol>
+    <symbol id="icon-youtube" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"/>
+      <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"/>
+    </symbol>
+    <symbol id="icon-utensils" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/>
+      <path d="M7 2v20"/>
+      <path d="M21 15V2v0a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/>
+    </symbol>
+    <symbol id="icon-activity" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+    </symbol>
+    <symbol id="icon-edit" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 20h9M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/>
+    </symbol>
+  </svg>
+
+  <div class="app-container">
+    <!-- App Header -->
+    <header class="app-header">
+      <h1 id="page-title">ダッシュボード</h1>
+      <div id="streak-badge" class="streak-badge">
+        <svg class="icon"><use href="#icon-fire"></use></svg>
+        <span id="streak-count">0</span> 日
+      </div>
+    </header>
+
+    <!-- Main Screens Viewport -->
+    <main class="app-viewport">
+      
+      <!-- SCREEN 1: DASHBOARD -->
+      <section id="screen-dashboard" class="screen-panel active">
+        <!-- Welcoming & Current status card -->
+        <div class="glass-card welcome-card">
+          <div class="welcome-bg-glow"></div>
+          <h2>こんにちは！ 💪</h2>
+          <p>今日もトレーニングを記録して、理想の身体に近づきましょう！</p>
+          <button id="btn-quick-start" class="btn btn-primary">
+            <svg class="icon"><use href="#icon-plus"></use></svg>
+            ワークアウトを開始
+          </button>
+        </div>
+
+        <!-- Training Calendar Card -->
+        <div class="section-title">トレーニングカレンダー</div>
+        <div id="dashboard-calendar" class="glass-card calendar-card" style="margin-bottom: 20px; padding: 12px;">
+          <!-- Dynamically populated monthly calendar -->
+        </div>
+
+        <!-- Today's Status Cards -->
+        <div class="section-title">本日の記録状況</div>
+        <div class="today-status-list">
+          <!-- Workout Card -->
+          <div id="card-status-workout" class="glass-card today-status-card">
+            <div class="status-card-left">
+              <div class="status-card-icon-wrap workout">
+                <svg class="icon"><use href="#icon-dumbbell"></use></svg>
+              </div>
+              <div class="status-card-details">
+                <h4>トレーニング記録</h4>
+                <p id="label-status-workout">未実施</p>
+              </div>
+            </div>
+            <svg class="chevron-icon"><use href="#icon-chevron-right"></use></svg>
+          </div>
+
+          <!-- Meals Card -->
+          <div id="card-status-meals" class="glass-card today-status-card">
+            <div class="status-card-left">
+              <div class="status-card-icon-wrap meals">
+                <svg class="icon"><use href="#icon-utensils"></use></svg>
+              </div>
+              <div class="status-card-details">
+                <h4>食事カロリー記録</h4>
+                <p id="label-status-meals">0 kcal</p>
+              </div>
+            </div>
+            <svg class="chevron-icon"><use href="#icon-chevron-right"></use></svg>
+          </div>
+
+          <!-- Weight/Composition Card -->
+          <div id="card-status-metrics" class="glass-card today-status-card">
+            <div class="status-card-left">
+              <div class="status-card-icon-wrap metrics">
+                <svg class="icon"><use href="#icon-activity"></use></svg>
+              </div>
+              <div class="status-card-details">
+                <h4>体重・体組成記録</h4>
+                <p id="label-status-metrics">未測定</p>
+              </div>
+            </div>
+            <svg class="chevron-icon"><use href="#icon-chevron-right"></use></svg>
+          </div>
+        </div>
+
+        <!-- Weekly Summary -->
+        <div class="section-title">今週の統計</div>
+        <div class="stats-grid">
+          <div class="glass-card stat-item">
+            <span class="stat-label">合計ワークアウト</span>
+            <span id="stat-weekly-count" class="stat-value">0</span>
+            <span class="stat-unit">回</span>
+          </div>
+          <div class="glass-card stat-item">
+            <span class="stat-label">総ボリューム</span>
+            <span id="stat-weekly-volume" class="stat-value">0</span>
+            <span class="stat-unit">kg</span>
+          </div>
+        </div>
+
+        <!-- Recent Logs -->
+        <div class="section-title">最近の履歴</div>
+        <div id="recent-logs-list" class="recent-logs-list">
+          <div class="no-data">まだワークアウトの記録がありません</div>
+        </div>
+      </section>
+
+      <!-- SCREEN 2: WORKOUT LOGGER -->
+      <section id="screen-logger" class="screen-panel">
+        <!-- Start screen if no active workout -->
+        <div id="logger-inactive" class="logger-state-inactive" style="display: block; width: 100%;">
+          <div class="glass-card start-workout-card" style="margin-bottom: 20px; padding: 24px; text-align: center;">
+            <svg class="huge-icon" style="margin-bottom: 12px;"><use href="#icon-dumbbell"></use></svg>
+            <h3 style="margin-bottom: 8px;">ワークアウトを開始</h3>
+            <p style="font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 16px;">新しいセッションをスタートして記録しましょう。</p>
+            <button id="btn-start-session" class="btn btn-primary btn-large" style="width: 100%;">空のワークアウトを開始</button>
+          </div>
+
+          <div class="section-title">おすすめプログラム</div>
+          <div id="recommended-routines-list" class="routines-grid" style="margin-bottom: 20px;">
+            <!-- JSで動的生成 -->
+          </div>
+
+          <div class="section-title" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+            <span>マイカスタムルーティン</span>
+            <button id="btn-create-routine" class="btn btn-secondary btn-sm" style="padding: 4px 8px; font-size: 0.75rem; height: auto;">
+              <svg class="icon" style="width:12px; height:12px; margin-right:4px;"><use href="#icon-plus"></use></svg>作成
+            </button>
+          </div>
+          <div id="custom-routines-list" class="routines-grid">
+            <!-- JSで動的生成 -->
+          </div>
+        </div>
+
+        <!-- Logging screen if active workout -->
+        <div id="logger-active" class="logger-state-active" style="display: none;">
+          <!-- Workout Header Info -->
+          <div class="workout-header-card glass-card">
+            <div class="workout-meta">
+              <input type="text" id="input-workout-name" value="今日のワークアウト" class="workout-title-input">
+              <span id="workout-duration-timer" class="workout-duration-timer">00:00</span>
+            </div>
+            <div class="workout-header-actions">
+              <button id="btn-add-exercise" class="btn btn-secondary btn-sm">
+                <svg class="icon"><use href="#icon-plus"></use></svg>種目を追加
+              </button>
+              <button id="btn-quick-timer" class="btn btn-secondary btn-sm">
+                <svg class="icon"><use href="#icon-clock"></use></svg>タイマー
+              </button>
+            </div>
+          </div>
+
+          <!-- Exercises Logs List -->
+          <div id="active-exercises-list" class="active-exercises-list">
+            <!-- Dynamically populated exercises and set rows -->
+          </div>
+
+          <!-- Workout Finish Footer Actions -->
+          <div class="logger-footer-actions">
+            <button id="btn-cancel-workout" class="btn btn-danger-text">記録を破棄</button>
+            <button id="btn-finish-workout" class="btn btn-success">
+              <svg class="icon"><use href="#icon-check"></use></svg>ワークアウトを完了
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- SCREEN 3: HISTORY -->
+      <section id="screen-history" class="screen-panel">
+        <!-- History Segment Control -->
+        <div class="segment-control">
+          <button id="btn-history-tab-logs" class="segment-btn active">履歴ログ</button>
+          <button id="btn-history-tab-stats" class="segment-btn">統計・グラフ</button>
+        </div>
+
+        <!-- Sub-panel: Logs -->
+        <div id="history-panel-logs" class="history-sub-panel active">
+          <div id="history-list" class="history-list">
+            <div class="no-data">履歴データがありません</div>
+          </div>
+        </div>
+
+        <!-- Sub-panel: Stats -->
+        <div id="history-panel-stats" class="history-sub-panel">
+          <!-- Stats Summary Cards -->
+          <div class="stats-grid">
+            <div class="glass-card stat-item">
+              <span class="stat-label">生涯総トレーニング数</span>
+              <span id="stat-alltime-count" class="stat-value">0</span>
+              <span class="stat-unit">回</span>
+            </div>
+            <div class="glass-card stat-item">
+              <span class="stat-label">生涯総ボリューム</span>
+              <span id="stat-alltime-volume" class="stat-value">0</span>
+              <span class="stat-unit">kg</span>
+            </div>
+          </div>
+
+          <!-- Volume Chart Card -->
+          <div class="glass-card chart-card">
+            <h3>ボリューム推移 (直近7回)</h3>
+            <div class="chart-container">
+              <svg id="volume-chart-svg" class="analytics-chart" viewBox="0 0 350 200">
+                <!-- Dynamically rendered -->
+              </svg>
+            </div>
+          </div>
+
+          <!-- Estimated 1RM Chart Card -->
+          <div class="glass-card chart-card" style="margin-top: 16px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+              <h3 style="margin: 0;">推定1RM推移 (直近7回)</h3>
+              <select id="select-chart-exercise" class="search-input" style="width:140px; padding:4px 8px; font-size:0.75rem; height:auto; margin:0;">
+                <!-- JSで動的生成 -->
+              </select>
+            </div>
+            <div class="chart-container">
+              <svg id="1rm-chart-svg" class="analytics-chart" viewBox="0 0 350 200">
+                <!-- Dynamically rendered -->
+              </svg>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SCREEN 4: MEALS & BODY METRICS (NEW) -->
+      <section id="screen-body" class="screen-panel">
+        <!-- Segment Control -->
+        <div class="segment-control">
+          <button id="btn-body-tab-meals" class="segment-btn active">食事タイムライン</button>
+          <button id="btn-body-tab-metrics" class="segment-btn">体組成・体重</button>
+        </div>
+
+        <!-- Sub-panel: Meals -->
+        <div id="body-panel-meals" class="body-sub-panel active">
+          <div class="glass-card meal-summary-card">
+            <div class="meal-summary-header">
+              <h3>今日の総カロリー</h3>
+              <span id="meal-today-calories" class="meal-calories-badge">0 kcal</span>
+            </div>
+            <p style="font-size:0.75rem; color:var(--text-secondary); margin-top: 4px;">目標摂取カロリーに合わせた栄養管理を行います。</p>
+            <button id="btn-add-meal" class="btn btn-primary btn-sm btn-block" style="margin-top: 14px;">
+              <svg class="icon"><use href="#icon-plus"></use></svg>食事を記録する
+            </button>
+          </div>
+
+          <div class="section-title">タイムライン</div>
+          <div id="meals-timeline-list" class="meals-timeline">
+            <!-- Dynamically populated meals -->
+            <div class="no-data">今日の食事記録はありません</div>
+          </div>
+        </div>
+
+        <!-- Sub-panel: Body Metrics -->
+        <div id="body-panel-metrics" class="body-sub-panel">
+          <!-- Add Metric Button -->
+          <div class="glass-card metrics-action-card" style="padding:16px; margin-bottom:16px; display:flex; justify-content:space-between; align-items:center;">
+            <div>
+              <h4 style="font-size:0.95rem;">体組成の記録</h4>
+              <p style="font-size:0.7rem; color:var(--text-muted); margin-top:2px;">体重、体脂肪率をログします</p>
+            </div>
+            <button id="btn-add-metric" class="btn btn-secondary btn-sm">
+              <svg class="icon"><use href="#icon-plus"></use></svg>記録
+            </button>
+          </div>
+
+          <!-- Current Metric Indicators -->
+          <div class="stats-grid">
+            <div class="glass-card stat-item">
+              <span class="stat-label">最新の体重</span>
+              <span id="metric-curr-weight" class="stat-value">--</span>
+              <span class="stat-unit">kg</span>
+            </div>
+            <div class="glass-card stat-item">
+              <span class="stat-label">最新の体脂肪率</span>
+              <span id="metric-curr-fat" class="stat-value">--</span>
+              <span class="stat-unit">%</span>
+            </div>
+          </div>
+
+          <!-- Metrics Chart -->
+          <div class="glass-card chart-card">
+            <h3>体重・体脂肪率の推移</h3>
+            <div class="chart-container">
+              <svg id="metrics-chart-svg" class="analytics-chart" viewBox="0 0 350 200">
+                <!-- Dynamically rendered -->
+              </svg>
+            </div>
+          </div>
+
+          <div class="section-title">測定履歴</div>
+          <div id="metrics-history-list" class="metrics-history-list">
+            <!-- Dynamically populated -->
+          </div>
+        </div>
+      </section>
+
+      <!-- SCREEN 5: EXERCISES -->
+      <section id="screen-exercises" class="screen-panel">
+        <div class="exercises-header-actions">
+          <input type="text" id="input-search-exercise" placeholder="種目を検索..." class="search-input">
+          <button id="btn-new-exercise" class="btn btn-primary">
+            <svg class="icon"><use href="#icon-plus"></use></svg>新規作成
+          </button>
+        </div>
+
+        <!-- Category filter chips -->
+        <div id="exercise-category-filters" class="category-filters-container">
+          <!-- Dynamically populated chips -->
+        </div>
+
+        <div id="exercise-master-list" class="exercise-master-list">
+          <!-- Dynamically populated master lists -->
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Bottom Navigation Bar -->
+    <nav class="app-nav">
+      <button id="nav-btn-dashboard" class="nav-item active" data-screen="dashboard">
+        <svg class="nav-icon"><use href="#icon-home"></use></svg>
+        <span>ホーム</span>
+      </button>
+      <button id="nav-btn-logger" class="nav-item" data-screen="logger">
+        <div class="nav-logger-icon-wrapper">
+          <svg class="nav-icon"><use href="#icon-dumbbell"></use></svg>
+          <span id="active-workout-indicator" class="active-dot" style="display: none;"></span>
+        </div>
+        <span>記録する</span>
+      </button>
+      <button id="nav-btn-history" class="nav-item" data-screen="history">
+        <svg class="nav-icon"><use href="#icon-calendar"></use></svg>
+        <span>履歴</span>
+      </button>
+      <button id="nav-btn-body" class="nav-item" data-screen="body">
+        <svg class="nav-icon"><use href="#icon-activity"></use></svg>
+        <span>食事・体重</span>
+      </button>
+      <button id="nav-btn-exercises" class="nav-item" data-screen="exercises">
+        <svg class="nav-icon"><use href="#icon-list"></use></svg>
+        <span>種目</span>
+      </button>
+    </nav>
+
+    <!-- MODAL OVERLAY 1: SELECT EXERCISE FOR LOGGER -->
+    <div id="modal-select-exercise" class="modal-overlay">
+      <div class="modal-content glass-card">
+        <div class="modal-header">
+          <h3>種目を選択</h3>
+          <button class="modal-close-btn">&times;</button>
+        </div>
+        <div class="modal-search-bar">
+          <input type="text" id="modal-search-input" placeholder="種目を検索..." class="search-input">
+        </div>
+        <div id="modal-exercise-list" class="modal-body list-container">
+          <!-- Dynamically populated exercises -->
+        </div>
+      </div>
+    </div>
+
+    <!-- MODAL OVERLAY 2: REST TIMER -->
+    <div id="modal-timer" class="modal-overlay">
+      <div class="modal-content timer-modal-content glass-card">
+        <div class="modal-header">
+          <h3>インターバルタイマー</h3>
+          <button class="modal-close-btn">&times;</button>
+        </div>
+        <div class="modal-body timer-body">
+          <div class="timer-circle-container">
+            <svg class="timer-svg" viewBox="0 0 100 100">
+              <circle class="timer-track" cx="50" cy="50" r="45"></circle>
+              <circle id="timer-progress" class="timer-progress-bar" cx="50" cy="50" r="45" stroke-dasharray="283" stroke-dashoffset="0"></circle>
+            </svg>
+            <div id="timer-text" class="timer-text">01:30</div>
+          </div>
+          
+          <div class="timer-presets">
+            <button class="btn btn-outline btn-sm timer-preset-btn" data-seconds="30">+30秒</button>
+            <button class="btn btn-outline btn-sm timer-preset-btn" data-seconds="60">+1分</button>
+            <button class="btn btn-outline btn-sm timer-preset-btn" data-seconds="90">+1分半</button>
+            <button class="btn btn-outline btn-sm timer-preset-btn" data-seconds="120">+2分</button>
+          </div>
+
+          <div class="timer-actions">
+            <button id="btn-timer-toggle" class="btn btn-primary">
+              <svg class="icon"><use href="#icon-pause"></use></svg>一時停止
+            </button>
+            <button id="btn-timer-reset" class="btn btn-outline">リセット</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODAL OVERLAY 3: ADD NEW CUSTOM EXERCISE -->
+    <div id="modal-create-exercise" class="modal-overlay">
+      <div class="modal-content glass-card">
+        <div class="modal-header">
+          <h3>カスタム種目の追加</h3>
+          <button class="modal-close-btn">&times;</button>
+        </div>
+        <div class="modal-body">
+          <form id="form-create-exercise" class="modal-form">
+            <div class="form-group">
+              <label for="input-new-exercise-name">種目名</label>
+              <input type="text" id="input-new-exercise-name" required placeholder="例: インクラインダンベルプレス" class="search-input">
+            </div>
+            <div class="form-group">
+              <label for="select-new-exercise-category">対象部位（部位カテゴリ）</label>
+              <select id="select-new-exercise-category" class="search-input">
+                <option value="胸">胸 (Chest)</option>
+                <option value="背中">背中 (Back)</option>
+                <option value="脚">脚 (Legs)</option>
+                <option value="肩">肩 (Shoulders)</option>
+                <option value="腕">腕 (Arms)</option>
+                <option value="腹筋">腹筋 (Abs)</option>
+                <option value="その他">その他 (Others)</option>
+              </select>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">種目を追加する</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODAL OVERLAY 4: ADD MEAL LOG (NEW) -->
+    <div id="modal-create-meal" class="modal-overlay">
+      <div class="modal-content glass-card">
+        <div class="modal-header">
+          <h3>食事を記録</h3>
+          <button class="modal-close-btn">&times;</button>
+        </div>
+        <div class="modal-body">
+          <form id="form-create-meal" class="modal-form">
+            <div class="form-group">
+              <label for="select-meal-type">区分</label>
+              <select id="select-meal-type" class="search-input">
+                <option value="朝食">朝食 (Breakfast)</option>
+                <option value="昼食">昼食 (Lunch)</option>
+                <option value="夕食">夕食 (Dinner)</option>
+                <option value="間食">間食 (Snacks)</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="input-meal-memo">メニュー・メモ</label>
+              <input type="text" id="input-meal-memo" required placeholder="例: 鶏胸肉サラダ、玄米、プロテイン" class="search-input">
+            </div>
+            <div class="form-group">
+              <label for="input-meal-calories">推定カロリー (kcal)</label>
+              <input type="number" id="input-meal-calories" required placeholder="500" class="search-input" inputmode="numeric">
+            </div>
+            <div class="form-group">
+              <label for="input-meal-image">食事の写真 (オプション)</label>
+              <input type="file" id="input-meal-image" accept="image/*" class="search-input">
+              <div id="meal-image-preview" class="meal-image-preview-container" style="display:none; margin-top:8px; text-align:center;">
+                <img id="img-meal-preview" src="" style="max-width:100%; max-height:120px; border-radius:8px; border:1px solid rgba(255,255,255,0.15);">
+              </div>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">食事を保存</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODAL OVERLAY 5: ADD BODY METRICS (NEW) -->
+    <div id="modal-create-metric" class="modal-overlay">
+      <div class="modal-content glass-card">
+        <div class="modal-header">
+          <h3>体組成の記録</h3>
+          <button class="modal-close-btn">&times;</button>
+        </div>
+        <div class="modal-body">
+          <form id="form-create-metric" class="modal-form">
+            <div class="form-group">
+              <label for="input-metric-weight">体重 (kg)</label>
+              <input type="number" id="input-metric-weight" required placeholder="65.4" class="search-input" step="0.05" inputmode="decimal">
+            </div>
+            <div class="form-group">
+              <label for="input-metric-fat">体脂肪率 (%)</label>
+              <input type="number" id="input-metric-fat" placeholder="15.2" class="search-input" step="0.1" inputmode="decimal">
+            </div>
+            <div class="form-group">
+              <label for="input-metric-muscle">骨格筋量 (kg - 任意)</label>
+              <input type="number" id="input-metric-muscle" placeholder="32.5" class="search-input" step="0.1" inputmode="decimal">
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">測定データを保存</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODAL OVERLAY 6: CREATE CUSTOM ROUTINE -->
+    <div id="modal-create-routine" class="modal-overlay">
+      <div class="modal-content glass-card">
+        <div class="modal-header">
+          <h3>カスタムルーティンの作成</h3>
+          <button class="modal-close-btn">&times;</button>
+        </div>
+        <div class="modal-body">
+          <form id="form-create-routine" class="modal-form">
+            <div class="form-group">
+              <label for="input-routine-name">ルーティン名</label>
+              <input type="text" id="input-routine-name" required placeholder="例: 胸と肩の日 (Push)" class="search-input">
+            </div>
+            <div class="form-group">
+              <label>対象の種目 (複数選択可)</label>
+              <div id="routine-exercises-checkboxes" class="checkboxes-list-container" style="max-height: 200px; overflow-y: auto; margin-top: 8px; border: 1px solid rgba(255,255,255,0.08); border-radius:8px; padding:8px;">
+                <!-- JSで動的生成 -->
+              </div>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">ルーティンを保存する</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODAL OVERLAY 7: EDIT PAST WORKOUT -->
+    <div id="modal-edit-past-workout" class="modal-overlay">
+      <div class="modal-content glass-card" style="max-height: 90%;">
+        <div class="modal-header">
+          <h3>トレーニング記録の編集</h3>
+          <button class="modal-close-btn">&times;</button>
+        </div>
+        <div class="modal-body">
+          <form id="form-edit-past-workout" class="modal-form">
+            <input type="hidden" id="input-edit-past-id">
+            <div class="form-group">
+              <label for="input-edit-past-name">ワークアウト名</label>
+              <input type="text" id="input-edit-past-name" required placeholder="例: 胸のトレーニング" class="search-input">
+            </div>
+            <div class="form-group">
+              <label for="input-edit-past-date">日時</label>
+              <input type="datetime-local" id="input-edit-past-date" required class="search-input">
+            </div>
+            
+            <div class="section-title" style="display: flex; justify-content: space-between; align-items: center; margin-top: 16px; margin-bottom: 8px;">
+              <span>記録内容</span>
+              <button type="button" id="btn-edit-past-add-exercise" class="btn btn-secondary btn-sm" style="padding: 4px 8px; font-size: 0.75rem; height: auto;">
+                <svg class="icon" style="width:12px; height:12px; margin-right:4px;"><use href="#icon-plus"></use></svg>種目を追加
+              </button>
+            </div>
+            
+            <div id="edit-past-exercises-list" class="active-exercises-list" style="max-height: 350px; overflow-y: auto; padding-right: 4px; margin-bottom: 16px;">
+              <!-- JSで過去の種目・セット一覧を編集用に動的生成 -->
+            </div>
+            
+            <button type="submit" class="btn btn-primary btn-block">変更を保存</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODAL OVERLAY 8: CALENDAR DAY DETAIL -->
+    <div id="modal-calendar-day-detail" class="modal-overlay">
+      <div class="modal-content glass-card" style="max-height: 90%;">
+        <div class="modal-header">
+          <h3 id="calendar-day-detail-title">日付の記録</h3>
+          <button class="modal-close-btn">&times;</button>
+        </div>
+        <div class="modal-body" style="padding-top: 8px;">
+          <div id="calendar-day-detail-content">
+            <!-- Dynamically populated workout logs of the selected day -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FLOATING TINY TIMER CARD -->
+    <div id="floating-rest-timer" class="floating-timer-badge" style="display: none;">
+      <svg class="icon"><use href="#icon-clock"></use></svg>
+      <span id="floating-timer-text">01:30</span>
+    </div>
+  </div>
+
+  <!-- SVG Gradients for styling charts/timers -->
+  <svg style="width: 0; height: 0; position: absolute;" aria-hidden="true">
+    <defs>
+      <linearGradient id="timer-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#00f2fe" />
+        <stop offset="100%" stop-color="#4facfe" />
+      </linearGradient>
+      <linearGradient id="chart-gradient-line" x1="0%" y1="0%" x2="100%" y2="0%">
+        <stop offset="0%" stop-color="#00f2fe" />
+        <stop offset="100%" stop-color="#00f5a0" />
+      </linearGradient>
+      <linearGradient id="chart-gradient-fat" x1="0%" y1="0%" x2="100%" y2="0%">
+        <stop offset="0%" stop-color="#ff4b5c" />
+        <stop offset="100%" stop-color="#ffb830" />
+      </linearGradient>
+    </defs>
+  </svg>
+
+  <script src="app.js"></script>
+</body>
+</html>
